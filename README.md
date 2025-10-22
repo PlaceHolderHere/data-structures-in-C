@@ -1,0 +1,1 @@
+Hi! In this repository I'll be coding some data structures in C. Any tutuorials or references I used will be linked here.
