@@ -2,7 +2,8 @@
 #include <stdlib.h>
 
 // FUNCTIONS
-struct queue initQueue(int numberOfItems); 
+struct queue initQueue(int numberOfItems);
+void addToQueue(int item, struct queue queueStruct, struct queue *queueStructPointer); 
 
 // STRUCT
 struct queue{
@@ -14,12 +15,19 @@ struct queue{
 
 // MAIN
 int main(){
-    struct queue queue = initQueue(2);
+    struct queue queue = initQueue(5);
+    struct queue *pQueue = &queue;
+
     if (queue.queuePointer == NULL){
         return 1;
     }
 
     return 0;
+}
+
+void addToQueue(int item, struct queue queueStruct, struct queue *queueStructPointer){
+    queueStruct.queuePointer[queueStruct.queueEndIndex] = item;
+    queueStructPointer->queueEndIndex = queueStruct.queueEndIndex + 1;
 }
 
 struct queue initQueue(int numberOfItems){
