@@ -4,6 +4,7 @@
 // FUNCTIONS
 struct queue initQueue(int numberOfItems);
 void addToQueue(int item, struct queue queueStruct, struct queue *queueStructPointer); 
+int peakQueue(struct queue queueStruct);
 
 // STRUCT
 struct queue{
@@ -15,14 +16,20 @@ struct queue{
 
 // MAIN
 int main(){
+    // INITIALIZATION
     struct queue queue = initQueue(5);
     struct queue *pQueue = &queue;
 
+    // ERROR HANDLING
     if (queue.queuePointer == NULL){
         return 1;
     }
 
     return 0;
+}
+
+int peakQueue(struct queue queueStruct){
+    return queueStruct.queuePointer[queueStruct.queueStartIndex];
 }
 
 void addToQueue(int item, struct queue queueStruct, struct queue *queueStructPointer){
