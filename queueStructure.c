@@ -5,6 +5,7 @@
 struct queue initQueue(int numberOfItems);
 void addToQueue(int item, struct queue queueStruct, struct queue *queueStructPointer); 
 int peakQueue(struct queue queueStruct);
+void popQueue(struct queue queueStruct, struct queue *queueStructPointer);
 
 // STRUCT
 struct queue{
@@ -25,7 +26,24 @@ int main(){
         return 1;
     }
 
+    // Adding test items to the queue
+    for (int i=0; i<queue.queueSize; i++){
+        addToQueue(i, queue, pQueue);
+    }
+
+    popQueue(queue, pQueue);
+    printf("%d", queue.queuePointer[queue.queueStartIndex]);
+
     return 0;
+}
+
+void popQueue(struct queue queueStruct, struct queue *queueStructPointer){
+    // Checks if there are no items in queue
+    if (queueStruct.queueStartIndex != queueStruct.queueEndIndex){
+        int returnValue = queueStruct.queuePointer[queueStruct.queueStartIndex];
+        queueStruct.queuePointer[queueStruct.queueStartIndex] = 0;
+        queueStructPointer->queueStartIndex += 1;
+    }
 }
 
 int peakQueue(struct queue queueStruct){
