@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 // FUNCTIONS
 struct queue initQueue(int numberOfItems);
-void addToQueue(int item, struct queue queueStruct, struct queue *queueStructPointer); 
+bool addToQueue(int item, struct queue queueStruct, struct queue *queueStructPointer); 
 int peakQueue(struct queue queueStruct);
 void popQueue(struct queue queueStruct, struct queue *queueStructPointer);
 
@@ -50,9 +51,17 @@ int peakQueue(struct queue queueStruct){
     return queueStruct.queuePointer[queueStruct.queueStartIndex];
 }
 
-void addToQueue(int item, struct queue queueStruct, struct queue *queueStructPointer){
+bool addToQueue(int item, struct queue queueStruct, struct queue *queueStructPointer){
+    // Returns false if queue is full
+    if (queueStruct.queueLength + 1 > queueStruct.queueSize){
+        printf("Error! Queue is Full.\n");
+        return false;
+    }
+
     queueStruct.queuePointer[queueStruct.queueEndIndex] = item;
-    queueStructPointer->queueEndIndex = queueStruct.queueEndIndex + 1;
+    queueStructPointer->queueLength += 1;
+    queueStructPointer->queueEndIndex += 1;
+    return true;
 }
 
 struct queue initQueue(int numberOfItems){
