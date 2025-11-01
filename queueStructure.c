@@ -1,10 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 
 // FUNCTIONS
 struct queue initQueue(int numberOfItems);
-bool addToQueue(int item, struct queue queueStruct, struct queue *queueStructPointer); 
+void addToQueue(int item, struct queue queueStruct, struct queue *queueStructPointer); 
 int peakQueue(struct queue queueStruct);
 void popQueue(struct queue queueStruct, struct queue *queueStructPointer);
 
@@ -14,6 +13,7 @@ struct queue{
     int queueEndIndex;
     int queueSize;
     int* queuePointer;
+    int queueLength;
 };
 
 // MAIN
@@ -32,12 +32,7 @@ int main(){
         addToQueue(i, queue, pQueue);
     }
 
-    // Testing
-    // Printing all items in queue
-    for (int i=0; i<queue.queueSize; i++){
-        printf("%d\n", peakQueue(queue));
-        popQueue(queue, pQueue);
-    }
+
 
     return 0;
 }
@@ -55,22 +50,19 @@ int peakQueue(struct queue queueStruct){
     return queueStruct.queuePointer[queueStruct.queueStartIndex];
 }
 
-bool addToQueue(int item, struct queue queueStruct, struct queue *queueStructPointer){
-    // create an end/null character at queueEndIndex?
-
+void addToQueue(int item, struct queue queueStruct, struct queue *queueStructPointer){
     queueStruct.queuePointer[queueStruct.queueEndIndex] = item;
-    queueStructPointer->queueEndIndex += 1;
-    return true;
+    queueStructPointer->queueEndIndex = queueStruct.queueEndIndex + 1;
 }
 
 struct queue initQueue(int numberOfItems){
     int *pQueue = (int *)malloc(numberOfItems * sizeof(int));
     if (pQueue == NULL){
-        struct queue failedQueueStruct = {0, 0, 0, NULL};
+        struct queue failedQueueStruct = {0, 0, 0, NULL, 0};
         printf("Error! Failed to allocate memory for the Queue\n");
         return failedQueueStruct;
     }
 
-    struct queue queueStruct = {0, 1, numberOfItems, pQueue};
+    struct queue queueStruct = {0, 0, numberOfItems, pQueue, 0};
     return queueStruct;
 }
