@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 // FUNCTIONS
 struct queue initQueue(int numberOfItems);
-void addToQueue(int item, struct queue queueStruct, struct queue *queueStructPointer); 
+bool addToQueue(int item, struct queue queueStruct, struct queue *queueStructPointer); 
 int peakQueue(struct queue queueStruct);
 void popQueue(struct queue queueStruct, struct queue *queueStructPointer);
 
@@ -31,8 +32,12 @@ int main(){
         addToQueue(i, queue, pQueue);
     }
 
-    popQueue(queue, pQueue);
-    printf("%d", queue.queuePointer[queue.queueStartIndex]);
+    // Testing
+    // Printing all items in queue
+    for (int i=0; i<queue.queueSize; i++){
+        printf("%d\n", peakQueue(queue));
+        popQueue(queue, pQueue);
+    }
 
     return 0;
 }
@@ -50,9 +55,12 @@ int peakQueue(struct queue queueStruct){
     return queueStruct.queuePointer[queueStruct.queueStartIndex];
 }
 
-void addToQueue(int item, struct queue queueStruct, struct queue *queueStructPointer){
+bool addToQueue(int item, struct queue queueStruct, struct queue *queueStructPointer){
+    // create an end/null character at queueEndIndex?
+
     queueStruct.queuePointer[queueStruct.queueEndIndex] = item;
-    queueStructPointer->queueEndIndex = queueStruct.queueEndIndex + 1;
+    queueStructPointer->queueEndIndex += 1;
+    return true;
 }
 
 struct queue initQueue(int numberOfItems){
@@ -63,6 +71,6 @@ struct queue initQueue(int numberOfItems){
         return failedQueueStruct;
     }
 
-    struct queue queueStruct = {0, 0, numberOfItems, pQueue};
+    struct queue queueStruct = {0, 1, numberOfItems, pQueue};
     return queueStruct;
 }
