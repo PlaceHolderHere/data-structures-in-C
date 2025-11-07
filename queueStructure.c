@@ -43,9 +43,15 @@ bool popQueue(struct queue queueStruct, struct queue *queueStructPointer){
         return false;
     } 
     
+    if (queueStruct.queueStartIndex > queueStruct.queueLength){
+        queueStructPointer->queueStartIndex = 0;
+    }
+    else{
+        queueStructPointer->queueStartIndex += 1;
+    }
+
     int returnValue = queueStruct.queuePointer[queueStruct.queueStartIndex];
     queueStruct.queuePointer[queueStruct.queueStartIndex] = 0;
-    queueStructPointer->queueStartIndex += 1;
     queueStructPointer->queueLength -= 1;
     return true;
 }
@@ -63,7 +69,13 @@ bool addToQueue(int item, struct queue queueStruct, struct queue *queueStructPoi
 
     queueStruct.queuePointer[queueStruct.queueEndIndex] = item;
     queueStructPointer->queueLength += 1;
-    queueStructPointer->queueEndIndex += 1;
+    
+    if (queueStruct.queueEndIndex > queueStruct.queueLength){
+        queueStructPointer->queueEndIndex = 0;
+    }
+    else{
+        queueStructPointer->queueEndIndex += 1;
+    }
     return true;
 }
 
