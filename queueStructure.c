@@ -7,6 +7,7 @@ struct queue initQueue(int numberOfItems);
 bool addToQueue(int item, struct queue queueStruct, struct queue *queueStructPointer); 
 int peakQueue(struct queue queueStruct);
 bool popQueue(struct queue queueStruct, struct queue *queueStructPointer);
+bool freeQueue(struct queue queueStruct, struct queue *queueStructPointer);
 
 // STRUCT
 struct queue{
@@ -33,7 +34,31 @@ int main(){
         addToQueue(i, queue, pQueue);
     }
 
+    freeQueue(queue, pQueue);
+    pQueue = NULL;
+    
     return 0;
+}
+
+bool freeQueue(struct queue queueStruct, struct queue *queueStructPointer){
+    // Error Handling
+    if (queueStructPointer == NULL){
+        printf("Error! queueStructPointer is Null.");
+        return false;
+    }
+    
+    if (queueStruct.queuePointer == NULL){
+        printf("Error! queuePointer is Null.");
+        return false;
+    }
+
+    free(queueStruct.queuePointer);
+    queueStructPointer->queuePointer = NULL;
+    queueStructPointer->queueLength = -1;
+    queueStructPointer->queueStartIndex = -1;
+    queueStructPointer->queueEndIndex = -1;
+    queueStructPointer->queueSize = -1;
+    return true;
 }
 
 bool popQueue(struct queue queueStruct, struct queue *queueStructPointer){
