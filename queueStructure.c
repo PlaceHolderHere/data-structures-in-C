@@ -36,7 +36,7 @@ int main(){
 
     freeQueue(queue, pQueue);
     pQueue = NULL;
-    
+
     return 0;
 }
 
@@ -62,6 +62,12 @@ bool freeQueue(struct queue queueStruct, struct queue *queueStructPointer){
 }
 
 bool popQueue(struct queue queueStruct, struct queue *queueStructPointer){
+    // Error if you atempt to access a freed queue
+    if (queueStruct.queueSize == -1){
+        printf("Error! The queue you are atempting to access has been freed from memory.\n");
+        return false;
+    }
+
     // Checks if there are no items in queue
     if (queueStruct.queueLength == 0){
         printf("Queue is empty!\n");
@@ -82,10 +88,22 @@ bool popQueue(struct queue queueStruct, struct queue *queueStructPointer){
 }
 
 int peakQueue(struct queue queueStruct){
-    return queueStruct.queuePointer[queueStruct.queueStartIndex];
+    // Error if you atempt to access a freed queue
+    if (queueStruct.queueSize == -1){
+        printf("Error! The queue you are atempting to access has been freed from memory.\n");
+    }
+    else{
+        return queueStruct.queuePointer[queueStruct.queueStartIndex];
+    }
 }
 
 bool addToQueue(int item, struct queue queueStruct, struct queue *queueStructPointer){
+    // Error if you atempt to access a freed queue
+    if (queueStruct.queueSize == -1){
+        printf("Error! The queue you are atempting to access has been freed from memory.\n");
+        return false;
+    }
+    
     // Returns false if queue is full
     if (queueStruct.queueLength + 1 > queueStruct.queueSize){
         printf("Error! Queue is Full.\n");
