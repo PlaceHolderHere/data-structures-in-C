@@ -73,14 +73,8 @@ bool popQueue(struct queue queueStruct, struct queue *queueStructPointer){
         printf("Queue is empty!\n");
         return false;
     } 
-    
-    if (queueStruct.queueStartIndex > queueStruct.queueSize){
-        queueStructPointer->queueStartIndex = 0;
-    }
-    else{
-        queueStructPointer->queueStartIndex += 1;
-    }
 
+    queueStructPointer->queueStartIndex = (queueStruct.queueStartIndex > queueStruct.queueSize) ? 0 : queueStruct.queueStartIndex + 1;
     int returnValue = queueStruct.queuePointer[queueStruct.queueStartIndex];
     queueStruct.queuePointer[queueStruct.queueStartIndex] = 0;
     queueStructPointer->queueLength -= 1;
@@ -112,13 +106,7 @@ bool addToQueue(int item, struct queue queueStruct, struct queue *queueStructPoi
 
     queueStruct.queuePointer[queueStruct.queueEndIndex] = item;
     queueStructPointer->queueLength += 1;
-    
-    if (queueStruct.queueEndIndex > queueStruct.queueSize){
-        queueStructPointer->queueEndIndex = 0;
-    }
-    else{
-        queueStructPointer->queueEndIndex += 1;
-    }
+    queueStructPointer->queueEndIndex = (queueStruct.queueEndIndex > queueStruct.queueSize) ? 0 : queueStruct.queueEndIndex + 1;
     return true;
 }
 
