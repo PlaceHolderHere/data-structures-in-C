@@ -75,7 +75,6 @@ bool popQueue(struct queue queueStruct, struct queue *queueStructPointer){
     } 
 
     queueStructPointer->queueStartIndex = (queueStruct.queueStartIndex > queueStruct.queueSize) ? 0 : queueStruct.queueStartIndex + 1;
-    int returnValue = queueStruct.queuePointer[queueStruct.queueStartIndex];
     queueStruct.queuePointer[queueStruct.queueStartIndex] = 0;
     queueStructPointer->queueLength -= 1;
     return true;
